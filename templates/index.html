@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Draw and Save</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='assets/jquery.1.9.1.min.js') }}"></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="ako7gp6007wl0io"></script>
+    <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+</head>
+<body>
+
+    <div id="content">
+        
+        <!-- jQuery UI -->
+        <script type="text/javascript" src="{{ url_for('static', filename='inc/jquery.ui.core.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='inc/jquery.ui.widget.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='inc/jquery.ui.mouse.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='inc/jquery.ui.draggable.min.js') }}"></script>
+        
+        <!-- wColorPicker -->
+        <link rel="Stylesheet" type="text/css" href="{{ url_for('static', filename='inc/wColorPicker.css') }}" />
+        <script type="text/javascript" src="{{ url_for('static', filename='inc/wColorPicker.js') }}"></script>
+        
+        <!-- wPaint -->
+        <link rel="Stylesheet" type="text/css" href="{{ url_for('static', filename='inc/wPaint.css') }}" />
+        <script type="text/javascript" src="{{ url_for('static', filename='inc/wPaint.js') }}"></script>
+<div style="
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+"><h1>Draw and Save</h1><p>(Doodle and save to Dropbox)</p>
+
+
+</div>
+        <div class="content-box">
+            <div id="wPaint" style="position:relative; width:500px; height:300px; margin-left: auto; margin-right: auto; border-radius: 7px; background:#CACACA; border:solid black 1px;"></div>
+
+           <div style="
+    
+    text-align: center;
+    
+    margin-top: 15px;
+    margin-left: 7px;
+"><input type="text" id="filename" style="
+    border-radius: 7px;
+    -webkit-border-radius: 5px; 
+    border-radius: 7px; 
+    background-clip: padding-box; 
+    -webkit-box-shadow: 0px 0px 5px 0px #fcfcfc; 
+    box-shadow: 0px 0px 5px 0px #fcfcfc;    font-style: italic; 
+    width: 25%; 
+    font-size: 18px;  
+    box-sizing: border-box; 
+    text-align: center;
+" placeholder="filename"><a onclick="storefile()" class="dropbox-saver dropbox-saver-default dropbox-saver-default dropbox-saver-default" style="
+    margin-left: 17px;
+    position: relative;
+    font-size: 14px;
+"><span class="saver-btn-status"></span>Save to Dropbox</a></div>
+        <script>
+function storefile()
+{
+
+filepicker.setKey('AeGCA9cAkRGiAxvND9YDkz');
+var filename = document.getElementById('filename').value + ".png";
+var b64 = $("#wPaint").wPaint("image").split(',', 2)[1];
+filepicker.store(b64,{
+    mimetype: 'image/png',
+    base64decode: true
+},
+function(new_inkblob){
+        console.log(JSON.stringify(new_inkblob));
+        Dropbox.save(new_inkblob["url"], filename);
+    }
+);
+}
+        </script>
+        <script type="text/javascript">
+            var wp = $("#wPaint").wPaint({
+                image: "",
+                drawDown: function(e, mode){ $("#canvasDown").val(this.settings.mode + ": " + e.pageX + ',' + e.pageY); },
+                drawMove: function(e, mode){ $("#canvasMove").val(this.settings.mode + ": " + e.pageX + ',' + e.pageY); },
+                drawUp: function(e, mode){ $("#canvasUp").val(this.settings.mode + ": " + e.pageX + ',' + e.pageY); }
+            }).data('_wPaint');
+        </script> 
+</body>
+</html>
