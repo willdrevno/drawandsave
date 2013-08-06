@@ -3,7 +3,7 @@
 <head>
     <title>Draw and Save</title>
     <script type="text/javascript" src="{{ url_for('static', filename='assets/jquery.1.9.1.min.js') }}"></script>
-    <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="ako7gp6007wl0io"></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="GET KEY"></script>
     <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 </head>
 <body>
@@ -60,7 +60,7 @@
 function storefile()
 {
 
-filepicker.setKey('AeGCA9cAkRGiAxvND9YDkz');
+filepicker.setKey('INSERT KEY');
 var filename = document.getElementById('filename').value + ".png";
 var b64 = $("#wPaint").wPaint("image").split(',', 2)[1];
 filepicker.store(b64,{
